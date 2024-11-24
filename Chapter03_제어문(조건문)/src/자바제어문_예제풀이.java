@@ -1,4 +1,4 @@
-import java.util.Scanner;
+  import java.util.Scanner;
 
 public class 자바제어문_예제풀이 {
 
