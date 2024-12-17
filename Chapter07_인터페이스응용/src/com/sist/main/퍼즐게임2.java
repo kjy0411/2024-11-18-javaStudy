@@ -86,8 +86,9 @@ public class 퍼즐게임2 extends JFrame implements ActionListener,MouseListene
 			}else {
 				for(int j = 0; j < 17; j++) {
 					if(e.getSource() == btns[j]) {
-						if(!(j == last + 1
-							|| j == last - 1
+						System.out.println(j);
+						if(!((j == last + 1 && j % 4 != 0)
+							|| (j == last - 1 && j % 4 != 3)
 							|| j == last + 4
 							|| j == last - 4)) {
 							return;
