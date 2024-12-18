@@ -1,5 +1,5 @@
 package com.sist.exception;
-/*  
+/*   
  *  263page
  *  예외 : 수정이 가능한 에러 (가벼운 에러)
  *    = 사전적 의미 : 일반적이지 않은 상황
