@@ -1,46 +1,29 @@
 package com.sist.client;
+import java.awt.CardLayout;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.*;
+//화면 변경
 public class ControlPanel extends JPanel {
-	Image back;
-	JLabel la1, la2;
-	JTextField tf;
-	JPasswordField pf;
-	JButton b1, b2;
+	HomePenal hp;
+	ChatPenal cp;
+	FoodGenrePenal fgp;
+	FoodFindPenal ffp;
+	FoodDetailPenal fdp;
+	CardLayout card = new CardLayout();
 	public ControlPanel() {
-		back = Toolkit.getDefaultToolkit().getImage("c:\\javaDev\\background.jpg");
-		la1 = new JLabel("ID");
-		la2 = new JLabel("Password");
-		tf = new JTextField();
-		pf = new JPasswordField();
-		b1 = new JButton("로그인");
-		b2 = new JButton("취소");
-		
-		// 배치 => 실행과 동시에 실행 명령 => 초기화 => 생성자
-		setLayout(null);
-		la1.setBounds(10, 15, 80, 30);
-		tf.setBounds(95, 15, 200, 30);
-		add(la1); add(tf);
-
-		la2.setBounds(10, 50, 80, 30);
-		pf.setBounds(95, 50, 200, 30);
-		add(la2); add(pf);
-		
-		JPanel p = new JPanel();
-		p.setOpaque(false);
-		p.add(b1);
-		p.add(b2);
-		p.setBounds(10, 90, 285, 35);
-		add(p);
+		 setLayout(card);
+		 hp = new HomePenal(this);
+		 add("HOME",hp);
+		 cp = new ChatPenal(this);
+		 add("CHAT", cp);
+		 fgp = new FoodGenrePenal(this);
+		 add("FOOD",fgp);
+		 ffp = new FoodFindPenal(this);
+		 add("FIND",ffp);
+		 fdp = new FoodDetailPenal(this);
+		 add("DETAIL",fdp);
 	}
-	//오버라이딩
-		
-
-	@Override
-	public void paintComponent(Graphics g) {
-		// TODO Auto-generated method stub
-		g.drawImage(back, 0, 0, getWidth(), getHeight(), this);
-	}
+	
 }
