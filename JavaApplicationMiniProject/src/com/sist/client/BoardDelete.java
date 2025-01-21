@@ -2,11 +2,14 @@ package com.sist.client;
 import java.awt.Font;
 import java.util.*;
 import javax.swing.*;
-public class BoardDelete extends JPanel {
+import java.awt.event.*;
+import com.sist.dao.*;
+public class BoardDelete extends JPanel implements ActionListener{
 	JLabel titleLa,la, noLa;
 	JPasswordField pf;
 	JButton b1, b2;
-	public BoardDelete() {
+	ControlPanel cp;
+	public BoardDelete(ControlPanel cp) {
 		titleLa=new JLabel("삭제하기",JLabel.CENTER);
 		titleLa.setFont(new Font("맑은 고딕",Font.BOLD,30));
 		setLayout(null);
@@ -34,5 +37,35 @@ public class BoardDelete extends JPanel {
 		
 		add(la);
 		add(pf);
+		
+		b1.addActionListener(this);
+		b2.addActionListener(this);
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource() == b1) {
+			String pwd = String.valueOf(pf.getPassword());
+			if(pwd.length() < 1) {
+				pf.requestFocus();
+				return;
+			}
+			String no = noLa.getText();
+			
+			// 오라클 연동
+			ReplyBoardDAO dao = ReplyBoardDAO.newInstance();
+			boolean bCheck = dao.replyDelete(Integer.parseInt(no), pwd);
+			if(bCheck == true) {
+				//화면 이동
+				cp.card.show(cp, "BLIST");
+				cp.bList.print();
+			}else {
+				JOptionPane.showMessageDialog(this, "비밀번호가 틀립니다\n다시 입력하세요");
+				pf.setText("");
+				pf.requestFocus();
+			}
+		}else if(e.getSource() == b2) {
+			cp.card.show(cp, "BDETIAL");
+		}
 	}
 }

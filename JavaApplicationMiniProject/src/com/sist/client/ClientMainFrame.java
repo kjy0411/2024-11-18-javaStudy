@@ -196,7 +196,7 @@ public class ClientMainFrame extends JFrame implements ActionListener, Runnable,
 		}else if(e.getSource() == mf.b3) {
 			cp.card.show(cp, "FIND");
 		}else if(e.getSource() == mf.b7) {
-			cp.card.show(cp, "DETAIL");
+			cp.card.show(cp, "NP");
 		}else if(e.getSource() == mf.b5) {
 			cp.card.show(cp, "BLIST");
 		}

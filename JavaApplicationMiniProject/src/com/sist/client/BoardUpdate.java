@@ -119,7 +119,7 @@ public class BoardUpdate extends JPanel implements ActionListener{
 			boolean bCheck = dao.boardUpdate(vo);
 			if(bCheck == true) { // 수정한 상태
 				cp.card.show(cp, "BDETAIL");
-				cp.bDETAIL.print(2 , vo.getNo());
+				cp.bDetail.print(2 , vo.getNo());
 			}else { // 비밀번호가 틀리다
 				JOptionPane.showMessageDialog(this, "비밀번호가 틀립니다\n다시 입력하세요");
 				pwdPf.setText("");

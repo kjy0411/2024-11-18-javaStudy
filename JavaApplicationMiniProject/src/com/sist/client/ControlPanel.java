@@ -11,11 +11,13 @@ public class ControlPanel extends JPanel {
 	FoodGenrePenal fgp;
 	FoodFindPenal ffp;
 	FoodDetailPenal fdp;
-	BoardList bLIST;
-	BoardInsert bINSERT;
-	BoardDetail bDETAIL;
-	BoardUpdate bUPDATE;
-	BoardReply bREPLY;
+	BoardList bList;
+	BoardInsert bInsert;
+	BoardDetail bDetail;
+	BoardUpdate bUpdate;
+	BoardReply bReply;
+	BoardDelete bDelete;
+	NewsPanel np;
 	CardLayout card = new CardLayout();
 	public ControlPanel() {
 		 setLayout(card);
@@ -29,16 +31,30 @@ public class ControlPanel extends JPanel {
 		 add("FIND",ffp);
 		 fdp = new FoodDetailPenal(this);
 		 add("DETAIL",fdp);
-		 bLIST = new BoardList(this);
-		 add("BLIST",bLIST);
-		 bINSERT = new BoardInsert(this);
-		 add("BINSERT",bINSERT);
-		 bDETAIL = new BoardDetail(this);
-		 add("BDETAIL",bDETAIL);
-		 bUPDATE = new BoardUpdate(this);
-		 add("BUPDATE",bUPDATE);
-		 bREPLY = new BoardReply(this);
-		 add("BREPLY",bREPLY);
+		 bList = new BoardList(this);
+		 add("BLIST",bList);
+		 bInsert = new BoardInsert(this);
+		 add("BINSERT",bInsert);
+		 bDetail = new BoardDetail(this);
+		 add("BDETAIL",bDetail);
+		 bUpdate = new BoardUpdate(this);
+		 add("BUPDATE",bUpdate);
+		 bReply = new BoardReply(this);
+		 add("BREPLY",bReply);
+		 bDelete = new BoardDelete(this);
+		 add("BDELETE",bDelete);
+		 np = new NewsPanel(this);
+		 add("NP",np);
+		 /*  
+		  *  사용자 요청 ==> ControlPanel => 화면 이동
+		  *  							| 필요한 데이터 전송
+		  *  
+		  *  사용자 요청 ==> Controller => Model
+		  *  							  | => 데이터 전송
+		  *  							화면이동(View)
+		  *  => MVC (Spring형식)
+		  *  
+		  */
 	}
 	
 }

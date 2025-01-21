@@ -101,20 +101,40 @@ public class BoardDetail extends JPanel implements ActionListener{
 		// TODO Auto-generated method stub
 		if(e.getSource() == b3) {
 			cp.card.show(cp, "BLIST");
-			cp.bLIST.print(); // 데이터베이스 다시 읽기 => 조회수 +1;
+			cp.bList.print(); // 데이터베이스 다시 읽기 => 조회수 +1;
 			// 웹 => javascript:history.back() => 조회수 증가가 안된다
 			// <a href="list.jsp">목록</a>
 		}else if(e.getSource() == b1) { // 수정
-			cp.bUPDATE.pwdPf.setText("");
+			cp.bUpdate.pwdPf.setText("");
 			String strNo = no.getText();
 			ReplyBoardDAO dao = ReplyBoardDAO.newInstance();
 			ReplyBoardVO vo = dao.boardUpdateDate(Integer.parseInt(strNo));
 			cp.card.show(cp, "BUPDATE");
-			cp.bUPDATE.print(vo);
+			cp.bUpdate.print(vo);
 		}else if(e.getSource() == b2) { // 삭제
-			
+			String strNo = no.getText();
+			// 화면 이동
+			cp.card.show(cp, "BDELETE");
+			// strNo 전송
+			cp.bDelete.noLa.setText(strNo);
 		}else if(e.getSource() == b4) { // 답변
+			/*  
+			 *  윈도우 => 화면 변경 => 메모리 해제 => 초기화가 안된다
+			 *  웹 => list.jsp => 생성
+			 *  	 list.jsp => 해제, 생성
+			 *  	 -------- 자동으로 자바로 변경
+			 */
+			String strNo = no.getText(); // 번호
+			System.out.println(strNo);
+			//초기화
+			cp.bReply.nameTf.setText("");
+			cp.bReply.subTf.setText("");
+			cp.bReply.ta.setText("");
+			cp.bReply.pwdPf.setText("");
+			// 화면 이동
 			cp.card.show(cp, "BREPLY");
+			// => strnO를 전송
+			cp.bReply.noLa.setText(strNo);
 		}
 	}
 }

@@ -7,6 +7,8 @@ import java.awt.event.MouseListener;
 
 import javax.swing.*;
 import javax.swing.table.*;
+import javax.swing.text.html.HTMLDocument.HTMLReader.HiddenAction;
+
 import java.awt.*;
 import java.util.*;
 import java.util.List;
@@ -33,8 +35,8 @@ public class BoardList extends JPanel implements ActionListener, MouseListener{
     	titleLa=new JLabel("게시판",JLabel.CENTER);// <table>
     	titleLa.setFont(new Font("맑은 고딕",Font.BOLD,30)); //<h3></h3>
     	
-    	String[] col={"번호","제목","이름","작성일","조회수"};//<tr><th></th>....</tr>
-    	String[][] row=new String[0][5];
+    	String[] col={"번호","","제목","이름","작성일","조회수"};//<tr><th></th>....</tr>
+    	String[][] row=new String[0][6];
     	// 한줄에 5개 데이터를 첨부 
     	model=new DefaultTableModel(row,col) // 데이터 관리
     	{
@@ -56,23 +58,24 @@ public class BoardList extends JPanel implements ActionListener, MouseListener{
     		{
     			column.setPreferredWidth(50);
     		}
-    		else if(i==1)
+    		else if(i==2)
     		{
     			column.setPreferredWidth(350);
     		}
-    		else if(i==2)
+    		else if(i==3)
     		{
     			column.setPreferredWidth(100);
     		}
-    		else if(i==3)
+    		else if(i==4)
     		{
     			column.setPreferredWidth(150);
     		}
-    		else if(i==4)
+    		else if(i==5)
     		{
     			column.setPreferredWidth(50);
     		}
     	}
+    	table.getColumnModel().removeColumn(table.getColumnModel().getColumn(1));
     	table.getTableHeader().setReorderingAllowed(false);
     	table.setShowVerticalLines(false);
     	table.setRowHeight(30);
@@ -112,8 +115,9 @@ public class BoardList extends JPanel implements ActionListener, MouseListener{
     	}
     	//데이터 받기
     	List<ReplyBoardVO> list = dao.boardLististDate(curpage);
-    	totalpage = dao.boardTotalPage();
-    	
+    	int count = dao.boardRowPage();
+    	totalpage = (int)(Math.ceil(count/10.0));
+    	count = count - ((curpage * 10) - 10);
     	//출력 => 테이블
     	for(ReplyBoardVO vo : list) {
     		if(vo.getGroup_tab() > 0) { // 답변인 경우
@@ -124,6 +128,7 @@ public class BoardList extends JPanel implements ActionListener, MouseListener{
     			}
     			String subject = "<html><body>" + s + "<font color=red>☞</font>" + vo.getSubject() + "</body></html>";
     			String[] data = {
+    					String.valueOf(count),
     					String.valueOf(vo.getNo()),
     					subject,
     					vo.getName(),
@@ -133,6 +138,7 @@ public class BoardList extends JPanel implements ActionListener, MouseListener{
     			model.addRow(data);
     		}else { // 답변이 아닌 경우 => 새글
     			String[] data = {
+    					String.valueOf(count),
     					String.valueOf(vo.getNo()),
     					vo.getSubject(),
     					vo.getName(),
@@ -141,6 +147,7 @@ public class BoardList extends JPanel implements ActionListener, MouseListener{
     			};
     			model.addRow(data);
     		}
+    		count--;
     	}
     	pageLa.setText(curpage + "page / " + totalpage + "pages");
     }
@@ -149,11 +156,11 @@ public class BoardList extends JPanel implements ActionListener, MouseListener{
 		// TODO Auto-generated method stub
 		if(e.getSource() == inBtn) { // 새글
 			//초기화
-			cp.bINSERT.nameTf.setText("");
-			cp.bINSERT.subTf.setText("");
-			cp.bINSERT.ta.setText("");
-			cp.bINSERT.pwdPf.setText("");
-			cp.bINSERT.nameTf.requestFocus();
+			cp.bInsert.nameTf.setText("");
+			cp.bInsert.subTf.setText("");
+			cp.bInsert.ta.setText("");
+			cp.bInsert.pwdPf.setText("");
+			cp.bInsert.nameTf.requestFocus();
 			//이동
 			cp.card.show(cp, "BINSERT");
 		}else if(e.getSource() == prevBtn) { // 이전
@@ -177,12 +184,11 @@ public class BoardList extends JPanel implements ActionListener, MouseListener{
 				//클릭 위치
 				int row = table.getSelectedRow();
 				//게시물 번호 읽기
-				String no = model.getValueAt(row, 0).toString();
-				
+				String no = model.getValueAt(row, 1).toString();
 				//윈도우 / 웹 => 정수(X) => 문자열로 변환후 사용
 				// Database연동
 				cp.card.show(cp, "BDETAIL");
-				cp.bDETAIL.print(1, Integer.parseInt(no));
+				cp.bDetail.print(1, Integer.parseInt(no));
 			}
 		}
 	}

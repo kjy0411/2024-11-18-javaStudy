@@ -101,9 +101,9 @@ public class BoardInsert extends JPanel implements ActionListener{
 			
 			dao.boardInsert(vo); // 오라클 추가
 			//화면 이동
-			cp.bLIST.curpage = 1;
+			cp.bList.curpage = 1;
 			cp.card.show(cp, "BLIST");
-			cp.bLIST.print();;
+			cp.bList.print();;
 		}
 	}
 }
